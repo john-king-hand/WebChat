@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WebChat</title>
+    <link rel="stylesheet" href="../static/css/index.css">
+
+    <script>
+
+        {#发送消息#}
+        window.onload = function (ev) {
+
+            document.getElementById("send").onclick = function (ev2) {
+                xmlHttp = new XMLHttpRequest();
+                var content = document.getElementById("input_info").value;
+                if (content.length < 1) {
+                    alert("请输入字符后发送");
+                    return;
+                } else if (content.length > 200) {
+                    alert("每次发送不可以超出200个字符哈~");
+                    return;
+                }
+                xmlHttp.open("GET", "/send_and_save?my_text=" + content, true)
+                xmlHttp.onreadystatechange = function () {
+                    if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+                    }
+                }
+                xmlHttp.send();
+                document.getElementById("input_info").value = "";
+            }
+
+        }
+
+    </script>
+
+
+    <script>
+
+        old_info = 0;
+
+        function updata_info() {
+            xmlHttp = new XMLHttpRequest();
+            xmlHttp.open("GET", "/get?old_info=" + old_info, true)
+            xmlHttp.onreadystatechange = function () {
+                if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+                    a = JSON.parse(xmlHttp.responseText).dataa
+                    if (parseInt(old_info) == parseInt(JSON.parse(a).old_info)) {
+                        return;
+                    }
+                    old_info = parseInt(JSON.parse(a).old_info)
+                    content = JSON.parse(a).info;
+                    for (var i = 0; i < content.length; i++) {
+                        if (content[i].user_name == "{{ username }}") {
+                            {#var html = "<div class='my_info'><span>" + content[i].user_name + "</span></div>";#}
+                            {#html = html + "<div class='my_one_info'>" + content[i].mess + "</div>"#}
+                            var div1 = document.createElement("div");
+                            var div2 = document.createElement("p");
+                            var div3 = document.createElement("p");
+                            var span1 = document.createElement("span");
+                            var span2 = document.createElement("span");
+                            span1.innerHTML = content[i].user_name
+                            span2.innerHTML = content[i].chat_content
+                            div2.className = "p_msg_me"
+                            div3.className = "p_msg_me"
+                            span1.className = "span_name_me";
+                            span2.className = "span_msg_me"
+                            div2.appendChild(span1)
+                            div3.appendChild(span2)
+                            div1.appendChild(div2)
+                            div1.appendChild(div3)
+                            document.getElementById("content").appendChild(div1)
+
+
+                        } else {
+                            {#var html = "<div class='my_info'><span>" + content[i].user_name + "</span></div>";#}
+                            {#html = html + "<div class='my_one_info'>" + content[i].mess + "</div>";#}
+                            var div1 = document.createElement("div");
+                            var div2 = document.createElement("p");
+                            var div3 = document.createElement("p");
+                            var span1 = document.createElement("span");
+                            var span2 = document.createElement("span");
+                            span1.innerHTML = content[i].user_name
+                            span2.innerHTML = content[i].chat_content
+                            span1.className = "span_name_other";
+                            span2.className = "span_msg_other"
+                            div2.appendChild(span1)
+                            div3.appendChild(span2)
+                            div1.appendChild(div2)
+                            div1.appendChild(div3)
+                            document.getElementById("content").appendChild(div1)
+                        }
+                        document.getElementById("content").scrollTop = document.getElementById("content").scrollHeight
+                    }
+                }
+            }
+            xmlHttp.send();
+        }
+
+        updata_info();
+        setInterval(updata_info, 1000);
+
+
+    </script>
+
+
+</head>
+<body>
+
+
+<div id="main_form">
+
+    <div id="content">
+
+    </div>
+    <div id="qqq"></div>
+    <p id="send_input">
+        <input type="text" name="my_text" id="input_info">
+        <button id="send">发送</button>
+    </p>
+    <div id="user_id" style="display: none">{{ username }}</div>
+
+</div>
+
+</body>
+</html>

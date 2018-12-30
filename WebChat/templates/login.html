@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WebChat 登录</title>
+    <link rel="stylesheet" href="../static/css/login.css">
+</head>
+<body>
+
+<h2>WebChat</h2>
+
+<div id="d1">
+    <form action="/login.html/" method="post">
+        <div class="d2">
+            <p>用户名：<input type="text" name="uname" maxlength="20"></p>
+        </div>
+        <div class="d2">
+            <p>密&nbsp;&nbsp;&nbsp;码：<input type="password" name="upwd"></p>
+        </div>
+
+        <p id="a"><a href="/sign.html/">还没有账号？点击这里</a></p>
+        <p id="a"><span>{{ text }}</span></p>
+        <p id="p1">
+            <input class="btn1" value="重新输入" type="reset">
+            <input class="btn1" value="确认登录" type="submit">
+        </p>
+    </form>
+</div>
+
+</body>
+</html>
