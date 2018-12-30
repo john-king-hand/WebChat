@@ -25,7 +25,7 @@ SECRET_KEY = '#ojkz^2nnjtsdz4kxvxrln-m(%so9+314%0o@0dre*ai4#%a8%'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['10.187.215.33','*',]
+ALLOWED_HOSTS = ['*',]
 
 
 # Application definition
@@ -79,8 +79,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'chat',
-        'USER': 'root',
-        'PASSWORD': '123456',
+        'USER': '',
+        'PASSWORD': '',
         'HOST': '127.0.0.1',
         'PORT': '3306',
     }
